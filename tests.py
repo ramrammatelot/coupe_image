@@ -59,7 +59,7 @@ class assignement:
         return l_f
         
 ###############################################
-
+#prout
 text=str(input("Veuillez mettre le nom du ficher : "))
 nombregroupe=int(input("Veuillez mettre le nombre de groupe dont vous avez besoin : "))
 
