@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import skimage 
 ################################################
-# Ce programme découpe des images !
+# Ce programme découpe des images !?
 #####
 
 class pixel:
