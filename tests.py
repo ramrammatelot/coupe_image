@@ -4,7 +4,10 @@ import numpy as np
 ################################################
 # Ce programme découpe des images !?
 # Prout
+<<<<<<< HEAD
 # pif pouf paf pif
+=======
+>>>>>>> 976837c3b57de15865a7c38ab09d05173c8c2102
 #####
 
 class pixel:
