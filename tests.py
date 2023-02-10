@@ -50,9 +50,12 @@ class assignement:
                 for i in line:
                     d=[]
                     ppos=0
+                    listd=[]
                     for e in self.gr :
                         d.append(d_min(abs(e.centroid-i.intensite),ppos))
+                        listd.append(abs(e.centroid-i.intensite))
                         ppos=ppos+1
+                        
                     mini=min(a.distance for a in d)
                     for e in d :
                         if mini==e.distance:
