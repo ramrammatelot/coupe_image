@@ -2,12 +2,6 @@ import matplotlib.pyplot as plt
 import skimage 
 import numpy as np
 ################################################
-# Ce programme découpe des images !?
-# Prout
-<<<<<<< HEAD
-# pif pouf paf pif
-=======
->>>>>>> 976837c3b57de15865a7c38ab09d05173c8c2102
 #####
 
 class pixel:
@@ -58,33 +52,30 @@ class assignement:
                         d.append(d_min(abs(e.centroid-i.intensite),ppos))
                         listd.append(abs(e.centroid-i.intensite))
                         ppos=ppos+1
-                        
-                    mini=min(a.distance for a in d)
+                    mini=min(listd)
                     for e in d :
                         if mini==e.distance:
-                            self.gr[e.pos].Liste.append(i)    
+                            self.gr[e.pos].Liste.append(i)
             nb=0
             for i in self.gr :
                 l_f[nb]=i.Liste
                 i.valmoy()
                 i.Liste=[]
-                print(i.Liste)
                 nb=nb+1
-                i.Liste=[]
-            # print(self.c1.centroid,self.c2.centroid,self.c3.centroid)
             x=x+1
+            # print(self.c1.centroid,self.c2.centroid,self.c3.centroid)
         return l_f
         
 ###############################################
 #prout
-text=str(input("Veuillez mettre le nom du ficher : "))
+ text=str(input("Veuillez mettre le nom du ficher : "))
 nombregroupe=int(input("Veuillez mettre le nombre de groupe dont vous avez besoin : "))
 
 
 
 typee=text.split('.')
 if typee[1]=='png':
-    contenu = skimage.io.imread('bretagne.png',as_gray=True)
+    contenu = skimage.io.imread(text,as_gray=True)
     matrice= list(list(i) for i in contenu)
 else :
     with open(text,'r') as fichier:
@@ -95,7 +86,12 @@ j=0
 i=0
 pixelmatrice=[]
 linepixelmatrice=[]
+maxii=[]
 for e in matrice :
+    if e == []:
+        matrice.pop(j)
+    else :
+        maxii.append(max(e))
     for a in e :
         linepixelmatrice.append(pixel(a,i,j))
         i=i+1
@@ -104,13 +100,14 @@ for e in matrice :
     linepixelmatrice=[]
     pixelmatrice.append(linepixelmatrice)
     
-pixelmatrice.pop(320)
-pixelmatrice.pop(319)
+# pixelmatrice.pop(320)
+# pixelmatrice.pop(319)
+maxi=max(maxii)
 
 n=0
 groupes=[]
 while n<nombregroupe:
-    groupes.append(groupe([],np.random.randint(0,100)))
+    groupes.append(groupe([],maxi/(n+1)))
     n=n+1
     
 
@@ -118,13 +115,14 @@ kmean=assignement(groupes, pixelmatrice)
 listefinal = kmean.ass(30)
 place_i=[]
 place_j=[]
-for i in listefinal :
-    for e in groupes :
-        for p in e.Liste:
-            place_i=p.pos_i
-            place_j=p.pos_j
-    plt.plot(place_j,place_i,'o',markersize=1,color='black')
+for l in listefinal :
+    for p in l :
+        place_i.append(p.pos_i)
+        place_j.append(p.pos_j)
+    plt.plot(place_j,place_i,',',markersize=1,color='black')
     plt.show()
+    place_i=[]
+    place_j=[]
 # place1_i=[i.pos_i for i in groupe1.Liste]
 # place1_j=[j.pos_j for j in groupe1.Liste]
 # place2_i=[i.pos_i for i in groupe2.Liste]
