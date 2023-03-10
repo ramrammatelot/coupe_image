@@ -21,16 +21,6 @@ class pixel:
       self.b=b
       self.pos_i = i
       self.pos_j = j
-      ### on définit l'addition entre les pixels
-   def __add__(self, other):
-       ### si on additionne un pixel avec un autre,
-       if type(other)==pixel :
-           ### alors leurs intensités s'ajoutent
-           return other.intensite + self.intensite
-       ### si on additionne un nombre avec un pixel,
-       elif type(other)==int :
-           ### alors on ajoute le nombre à l'intensité du pixel
-           return other + self.intensite
 
 class groupe :
     ### chaque groupe est définit par une liste (de pixels) et un centroide
@@ -101,7 +91,6 @@ class assignement:
                         listd.append(d_m)
                         ### ppos augmente de 1 pour que l'on change de groupe à la prochaine boucle
                         ppos=ppos+1
-                        print(e.centroid)
                     ### mini est la distance minimale entre un centroide et l'intensité
                     ### indépendamment du groupe
                     mini=min(listd)
@@ -154,7 +143,7 @@ typee=text.split('.')
 if typee[1]=='png':
     ### contenu est une chaine de caractère 
     ### contenant les intensités (en niveau de gris) de tout les pixels de l'image
-    contenu = skimage.io.imread('nb.png')
+    contenu = skimage.io.imread(text)
     ### on met chaque ligne "i" du contenu dans une matrice de i lignes
     matrice= list(list(i) for i in contenu)
 # else :
@@ -169,8 +158,9 @@ if typee[1]=='png':
 j=0
 i=0
 pixelmatrice=[]
+pixelmatricetest=[]
 linepixelmatrice=[]
-maxii=[]
+linepixelmatricetest=[]
 ### ici on va assigner chaque pixel de notre matrice à un pixel "a"
 ### puis on va metre tout les pixels "a" dans une liste de pixels "pixelmatrice"
 
@@ -194,19 +184,27 @@ for e in matrice :
     linepixelmatrice=[]
     ### la matrice de pixel apprend les lignes de pixels
     pixelmatrice.append(linepixelmatrice)
+
     
 
 ### ici on va créer n groupes vides
 n=0
 groupes=[]
 while n<nombregroupe:
-    groupes.append(groupe([],[255/(n+1),255/(n+1),255/(n+1)]))
+    if n==0:
+        groupes.append(groupe([],[255,0,0]))
+    elif n==1 :
+        groupes.append(groupe([],[0,255,0]))
+    elif n==2 :
+        groupes.append(groupe([],[0,0,255]))
+    else :
+        groupes.append(groupe([],[255%n,255%n,255%n]))
     n=n+1
     
 ### on lance l'assignement avec les n groupes et 
 ### notre liste de pixels provenant de notre fichier texte
 ass = assignement(groupes, pixelmatrice)
-listefinal = ass.Kmean(30)
+listefinal = ass.Kmean(10)
 
 nb_li=0
 for li in listefinal :
@@ -220,7 +218,9 @@ for l in listefinal :
     for p in l :
         place_i.append(p.pos_i)
         place_j.append(p.pos_j)
-    plt.plot(place_j,place_i,'.',markersize=1,color='black')
+    width = np.shape(matrice)
+    plt.axis([0,width[0],0,width[1]])
+    plt.plot(place_j,place_i,'s',markersize=100,color='black')
     plt.show()
     place_i=[]
     place_j=[]

@@ -204,6 +204,8 @@ for l in listefinal :
     for p in l :
         place_i.append(p.pos_i)
         place_j.append(p.pos_j)
+    width = np.shape(matrice)
+    plt.axis([0,width[0],0,width[1]])
     plt.plot(place_j,place_i,',',markersize=1,color='black')
     plt.show()
     place_i=[]
