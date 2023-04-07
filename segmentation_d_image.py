@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import skimage 
+import numpy as np
 
 ##########
 ##          Création des Classes

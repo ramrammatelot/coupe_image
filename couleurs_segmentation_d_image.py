@@ -123,7 +123,7 @@ class assignement:
             x=x+1
             ### à la fin de l'itération (x>itération) on retourne les listes finales
             ### avec nos nouveaux groupes (avec uniquement des pixels similaires à l'intérieur)
-        return l_f
+        return l_f,self.gr
  
        
 ##########
@@ -204,7 +204,7 @@ while n<nombregroupe:
 ### on lance l'assignement avec les n groupes et 
 ### notre liste de pixels provenant de notre fichier texte
 ass = assignement(groupes, pixelmatrice)
-listefinal = ass.Kmean(10)
+listefinal,groupes = ass.Kmean(10)
 
 nb_li=0
 for li in listefinal :
@@ -214,14 +214,31 @@ for li in listefinal :
 
 place_i=[]
 place_j=[]
+colorgroupe=[]
+pos_grou=0
+width = np.shape(matrice)
+
 for l in listefinal :
+    # r=groupes[pos_grou].centroid[0]/255
+    # g=groupes[pos_grou].centroid[1]/255
+    # b=groupes[pos_grou].centroid[2]/255
+    # colorgroupe = (r,g,b)
+    pos_grou=+1
     for p in l :
         place_i.append(p.pos_i)
         place_j.append(p.pos_j)
-    width = np.shape(matrice)
+        rgb=[p.r/255,p.v/255,p.b/255]
+        colorgroupe.append(rgb)
     plt.axis([0,width[0],0,width[1]])
-    plt.plot(place_j,place_i,'s',markersize=100,color='black')
-    plt.show()
+    C=np.array(colorgroupe)
+    fig= plt.figure()
+    ax = fig.add_subplot(111)
+    ax.scatter(place_j, place_i, c = C)
+    # while i<len(place_i):
+    #     plt.scatter(place_i[i],place_j[i],c=colorgroupe[i])
+    #     i=+1
+    colorgroupe=[]
+    # plt.show()
     place_i=[]
     place_j=[]
 
