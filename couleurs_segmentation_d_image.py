@@ -216,7 +216,7 @@ place_i=[]
 place_j=[]
 colorgroupe=[]
 pos_grou=0
-width = np.shape(matrice)
+width= np.shape(matrice)
 
 for l in listefinal :
     # r=groupes[pos_grou].centroid[0]/255
@@ -229,11 +229,11 @@ for l in listefinal :
         place_j.append(p.pos_j)
         rgb=[p.r/255,p.v/255,p.b/255]
         colorgroupe.append(rgb)
-    plt.axis([0,width[0],0,width[1]])
     C=np.array(colorgroupe)
     fig= plt.figure()
     ax = fig.add_subplot(111)
     ax.scatter(place_j, place_i, c = C)
+    plt.axis([0,width[0],0,width[1]])
     # while i<len(place_i):
     #     plt.scatter(place_i[i],place_j[i],c=colorgroupe[i])
     #     i=+1

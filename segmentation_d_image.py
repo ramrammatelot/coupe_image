@@ -201,14 +201,19 @@ for li in listefinal :
 
 place_i=[]
 place_j=[]
+width,lengh = np.shape(matrice)
+# if width>100 or lengh>100 :
+#     width=width/10
+#     lengh=lengh/10
 for l in listefinal :
     for p in l :
         place_i.append(p.pos_i)
         place_j.append(p.pos_j)
-    width = np.shape(matrice)
-    plt.axis([0,width[0],0,width[1]])
-    plt.plot(place_j,place_i,',',markersize=1,color='black')
-    plt.show()
+    fig= plt.figure(figsize=(width/width*20,lengh/width*20))
+    ax = fig.add_subplot(111)
+    ax.scatter(place_j, place_i,s=10,c='black')
+    # plt.plot(place_j,place_i,',',markersize=1,color='black')
+    # plt.show()
     place_i=[]
     place_j=[]
 
